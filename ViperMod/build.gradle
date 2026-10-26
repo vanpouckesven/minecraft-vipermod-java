@@ -55,6 +55,10 @@ repositories {
         url = "https://maven.blamejared.com/"
         content { includeGroup "mezz.jei" }
     }
+    maven { // EMI
+        url = "https://maven.terraformersmc.com/releases/"
+        content { includeGroup "dev.emi" }
+    }
     exclusiveContent { // CurseForge (LaserIO)
         forRepository { maven { url = "https://cursemaven.com" } }
         filter { includeGroup "curse.maven" }
@@ -62,13 +66,14 @@ repositories {
 }
 
 dependencies {
+    modCompileOnly "dev.emi:emi-forge:${emi_version}:api"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
-    modCompileOnly "curse.maven:laserio-626839:${laserio_file_id}"
+    modCompileOnly "curse.maven:laserio-uel-1168178:${laserio_file_id}"
 
-    // Enkel voor runClient in dev
-    modLocalRuntime "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"
-    modLocalRuntime "curse.maven:laserio-626839:${laserio_file_id}"
+    // Enkel voor runClient in dev (zoals Monifactory: EMI, geen JEI)
+    modLocalRuntime "dev.emi:emi-forge:${emi_version}"
+    modLocalRuntime "curse.maven:laserio-uel-1168178:${laserio_file_id}"
 }
 
 // mods.toml krijgt de waarden uit gradle.properties

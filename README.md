@@ -47,8 +47,8 @@ Build: `make build MOD=ViperMod` → `dist/ViperMod/vipermod-1.20.1-<versie>.jar
 
 ## Features
 
-### JEI "+" voor LaserIO-filters
-Klik in JEI op `+` bij een recept terwijl een LaserIO **basic** of **counting filter** open staat
+### EMI/JEI "+" voor LaserIO-filters
+Klik in EMI (of JEI) op `+` bij een recept terwijl een LaserIO **basic** of **counting filter** open staat
 (los, of in een item- of fluid card). De inputs van het recept komen in de filter.
 
 - Gelijke items worden samengeteld; bij de counting filter wordt dat de count.
@@ -57,4 +57,5 @@ Klik in JEI op `+` bij een recept terwijl een LaserIO **basic** of **counting fi
 - In een **fluid card** komen de fluid-inputs in de filter, als gevulde bucket of (zonder bucket) GT fluid cell. In een counting filter wordt de hoeveelheid in mB gezet.
 - In een item card of de losse filter-GUI komen enkel de item-inputs.
 - Werkt via LaserIO's eigen `PacketGhostSlot`, dus ViperMod hoeft enkel client-side geïnstalleerd te zijn voor deze feature.
-- Code: `integration/laserio/`.
+- Monifactory gebruikt **LaserIO UEL** (fork, modId `laserio`, versie 1.5.x) en **EMI** zonder JEI. ViperMod compileert daartegen; de JEI-variant werkt enkel in packs met JEI.
+- Code: `integration/laserio/` (`LaserIOEmi`, `LaserIOJei` delen `FilterTarget` en `RecipeInputs`).

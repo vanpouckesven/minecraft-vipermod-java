@@ -1,7 +1,7 @@
 package be.viper.vipermod.integration.jei;
 
 import be.viper.vipermod.ViperMod;
-import be.viper.vipermod.integration.laserio.LaserIOTransferHandlers;
+import be.viper.vipermod.integration.laserio.LaserIOJei;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeTransferRegistration;
@@ -21,7 +21,7 @@ public class ViperJeiPlugin implements IModPlugin {
     public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
         // LaserIO-klassen pas laden als de mod er is
         if (ModList.get().isLoaded("laserio")) {
-            LaserIOTransferHandlers.register(registration);
+            LaserIOJei.register(registration);
         }
     }
 }
