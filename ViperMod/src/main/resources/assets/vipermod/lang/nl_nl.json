@@ -3,5 +3,6 @@
   "vipermod.laserio.no_items": "Dit recept heeft geen item-inputs",
   "vipermod.laserio.no_fluids": "Dit recept heeft geen fluid-inputs",
   "vipermod.laserio.no_container": "Geen bucket of fluid cell gevonden voor %s",
-  "vipermod.laserio.too_many": "Recept heeft %s verschillende inputs, de filter heeft maar %s slots"
+  "vipermod.laserio.too_many": "Recept heeft %s verschillende inputs, de filter heeft maar %s slots",
+  "vipermod.laserio.multiplier": "Klik: receptaantal x%s · Shift+klik: exact"
 }

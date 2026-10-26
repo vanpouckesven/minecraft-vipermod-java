@@ -52,6 +52,8 @@ Klik in EMI (of JEI) op `+` bij een recept terwijl een LaserIO **basic** of **co
 (los, of in een item- of fluid card). De inputs van het recept komen in de filter.
 
 - Gelijke items worden samengeteld; bij de counting filter wordt dat de count.
+- Counting filter: **klik** = receptaantal × factor (buffer, standaard ×4), **shift+klik** = exact receptaantal.
+  Factor in `config/vipermod-client.toml` (`[laserio] filterMultiplier`, 1–64). Afgetopt op 4096 items / 4.096.000 mB per slot.
 - Alle 15 slots worden overschreven (niet-gebruikte slots worden leeg).
 - Meer dan 15 verschillende inputs, of geen filter in de card: de `+` is rood met uitleg.
 - In een **fluid card** komen de fluid-inputs in de filter, als gevulde bucket of (zonder bucket) GT fluid cell. In een counting filter wordt de hoeveelheid in mB gezet.

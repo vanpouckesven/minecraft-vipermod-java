@@ -61,7 +61,8 @@ public final class LaserIOJei<C extends AbstractContainerMenu> implements IUnive
             return helper.createUserErrorWithTooltip(result.error());
         }
         if (doTransfer) {
-            target.apply(result.entries());
+            // JEI: maxTransfer = shift+klik
+            target.apply(result.entries(), maxTransfer ? 1 : FilterTarget.multiplier());
         }
         return null;
     }

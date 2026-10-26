@@ -3,5 +3,6 @@
   "vipermod.laserio.no_items": "This recipe has no item inputs",
   "vipermod.laserio.no_fluids": "This recipe has no fluid inputs",
   "vipermod.laserio.no_container": "No bucket or fluid cell found for %s",
-  "vipermod.laserio.too_many": "Recipe has %s different inputs, the filter only has %s slots"
+  "vipermod.laserio.too_many": "Recipe has %s different inputs, the filter only has %s slots",
+  "vipermod.laserio.multiplier": "Click: recipe amount x%s · Shift+click: exact"
 }

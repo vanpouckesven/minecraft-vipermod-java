@@ -1,5 +1,6 @@
 package be.viper.vipermod.integration.laserio;
 
+import be.viper.vipermod.ViperConfig;
 import com.direwolf20.laserio.common.containers.CardFluidContainer;
 import com.direwolf20.laserio.common.containers.CardItemContainer;
 import com.direwolf20.laserio.common.containers.FilterBasicContainer;
@@ -9,6 +10,7 @@ import com.direwolf20.laserio.common.items.filters.FilterBasic;
 import com.direwolf20.laserio.common.items.filters.FilterCount;
 import com.direwolf20.laserio.common.network.PacketHandler;
 import com.direwolf20.laserio.common.network.packets.PacketGhostSlot;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 
@@ -26,7 +28,8 @@ import java.util.List;
 record FilterTarget(AbstractContainerMenu menu, int firstSlot, @Nullable FilterCountHandler countHandler,
                     boolean fluids) {
     static final int SLOTS = 15;
-    /** Maximum mB per slot, zoals in CardFluidScreen */
+    /** Maximum per slot, zoals in FilterCountScreen en CardFluidScreen */
+    static final int MAX_COUNT = 4096;
     static final int MAX_MB = 4_096_000;
 
     /**
@@ -60,8 +63,20 @@ record FilterTarget(AbstractContainerMenu menu, int firstSlot, @Nullable FilterC
         return null;
     }
 
-    /** Overschrijft alle filterslots; slots voorbij de lijst worden leeggemaakt. */
-    void apply(List<Entry> entries) {
+    /** Factor voor counting filters: uit de config, of x1 bij shift+klik. */
+    static int multiplier() {
+        return Screen.hasShiftDown() ? 1 : ViperConfig.LASERIO_FILTER_MULTIPLIER.get();
+    }
+
+    boolean counting() {
+        return countHandler != null;
+    }
+
+    /**
+     * Overschrijft alle filterslots; slots voorbij de lijst worden leeggemaakt.
+     * Bij een counting filter worden de aantallen vermenigvuldigd met {@code multiplier}, afgetopt op LaserIO's maximum.
+     */
+    void apply(List<Entry> entries, int multiplier) {
         for (int i = 0; i < SLOTS; i++) {
             Entry entry = i < entries.size() ? entries.get(i) : Entry.EMPTY;
             ItemStack stack = entry.stack().copy();
@@ -69,8 +84,10 @@ record FilterTarget(AbstractContainerMenu menu, int firstSlot, @Nullable FilterC
             if (countHandler == null) {
                 if (!stack.isEmpty()) stack.setCount(1);
             } else if (entry.mbAmount() > 0) {
-                mbAmount = Math.min(entry.mbAmount(), MAX_MB);
+                mbAmount = (int) Math.min((long) entry.mbAmount() * multiplier, MAX_MB);
                 stack.setCount(Math.max(1, mbAmount / 1000));
+            } else if (!stack.isEmpty()) {
+                stack.setCount((int) Math.min((long) stack.getCount() * multiplier, MAX_COUNT));
             }
             int slotIndex = firstSlot + i;
 

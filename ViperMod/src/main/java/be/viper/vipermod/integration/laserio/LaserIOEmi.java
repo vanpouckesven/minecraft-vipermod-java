@@ -1,5 +1,6 @@
 package be.viper.vipermod.integration.laserio;
 
+import be.viper.vipermod.ViperConfig;
 import dev.emi.emi.api.EmiRegistry;
 import dev.emi.emi.api.recipe.EmiPlayerInventory;
 import dev.emi.emi.api.recipe.EmiRecipe;
@@ -7,8 +8,10 @@ import dev.emi.emi.api.recipe.handler.EmiCraftContext;
 import dev.emi.emi.api.recipe.handler.EmiRecipeHandler;
 import dev.emi.emi.api.stack.EmiIngredient;
 import dev.emi.emi.api.stack.EmiStack;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
@@ -50,15 +53,21 @@ public final class LaserIOEmi implements EmiRecipeHandler<AbstractContainerMenu>
     public boolean craft(EmiRecipe recipe, EmiCraftContext<AbstractContainerMenu> context) {
         RecipeInputs.Result result = resolve(recipe, context);
         if (result.error() != null) return false;
-        FilterTarget.of(context.getScreenHandler()).apply(result.entries());
+        FilterTarget.of(context.getScreenHandler()).apply(result.entries(), FilterTarget.multiplier());
         return true;
     }
 
     @Override
     public List<ClientTooltipComponent> getTooltip(EmiRecipe recipe, EmiCraftContext<AbstractContainerMenu> context) {
         RecipeInputs.Result result = resolve(recipe, context);
-        if (result.error() == null) return List.of();
-        return List.of(ClientTooltipComponent.create(result.error().getVisualOrderText()));
+        if (result.error() != null) {
+            return List.of(ClientTooltipComponent.create(result.error().getVisualOrderText()));
+        }
+        FilterTarget target = FilterTarget.of(context.getScreenHandler());
+        if (target == null || !target.counting()) return List.of();
+        Component hint = Component.translatable("vipermod.laserio.multiplier",
+                ViperConfig.LASERIO_FILTER_MULTIPLIER.get()).withStyle(ChatFormatting.GRAY);
+        return List.of(ClientTooltipComponent.create(hint.getVisualOrderText()));
     }
 
     /** Eerste stack per ingredient (bij tags), met de hoeveelheid van het ingredient. */
