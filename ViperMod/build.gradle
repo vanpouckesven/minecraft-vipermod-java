@@ -1,0 +1,95 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'net.neoforged.moddev.legacyforge' version "${moddevgradle_version}"
+}
+
+group = maven_group
+version = mod_version
+base.archivesName = "${mod_id}-${minecraft_version}"
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+legacyForge {
+    version = "${minecraft_version}-${forge_version}"
+
+    parchment {
+        minecraftVersion = minecraft_version
+        mappingsVersion = parchment_version
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+            gameDirectory.set(file('run/server'))
+            programArgument '--nogui'
+        }
+        configureEach {
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+}
+
+// localRuntime: mods die enkel in runClient meedraaien, niet in de jar/POM
+configurations {
+    localRuntime
+    runtimeClasspath.extendsFrom localRuntime
+}
+obfuscation {
+    createRemappingConfiguration(configurations.localRuntime)
+}
+
+repositories {
+    maven { // JEI
+        url = "https://maven.blamejared.com/"
+        content { includeGroup "mezz.jei" }
+    }
+    exclusiveContent { // CurseForge (LaserIO)
+        forRepository { maven { url = "https://cursemaven.com" } }
+        filter { includeGroup "curse.maven" }
+    }
+}
+
+dependencies {
+    modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    modCompileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
+    modCompileOnly "curse.maven:laserio-626839:${laserio_file_id}"
+
+    // Enkel voor runClient in dev
+    modLocalRuntime "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"
+    modLocalRuntime "curse.maven:laserio-626839:${laserio_file_id}"
+}
+
+// mods.toml krijgt de waarden uit gradle.properties
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+            mod_id           : mod_id,
+            mod_name         : mod_name,
+            mod_version      : mod_version,
+            mod_description  : mod_description,
+            mod_license      : mod_license,
+            minecraft_version: minecraft_version,
+            forge_major      : forge_version.split("\\.")[0],
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+sourceSets.main.resources.srcDir generateModMetadata
+legacyForge.ideSyncTask generateModMetadata
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}

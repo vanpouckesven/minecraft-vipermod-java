@@ -1,0 +1,5 @@
+{
+  "vipermod.laserio.no_filter": "Put a basic or counting filter in the card first",
+  "vipermod.laserio.no_items": "This recipe has no item inputs",
+  "vipermod.laserio.too_many": "Recipe has %s different items, the filter only has %s slots"
+}

@@ -1,0 +1,14 @@
+# Wordt aangestuurd via de Makefile; die zet MOD, HOST_UID en HOST_GID.
+services:
+  build:
+    build:
+      context: .
+      args:
+        UID: ${HOST_UID:-1000}
+        GID: ${HOST_GID:-1000}
+    image: mc-modbuild
+    working_dir: /workspace/${MOD:-.}
+    volumes:
+      - .:/workspace
+      - ./.cache/gradle:/home/builder/.gradle
+    mem_limit: 8g

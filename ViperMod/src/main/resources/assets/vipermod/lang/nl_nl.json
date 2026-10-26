@@ -1,0 +1,5 @@
+{
+  "vipermod.laserio.no_filter": "Steek eerst een basic of counting filter in de card",
+  "vipermod.laserio.no_items": "Dit recept heeft geen item-inputs",
+  "vipermod.laserio.too_many": "Recept heeft %s verschillende items, de filter heeft maar %s slots"
+}
