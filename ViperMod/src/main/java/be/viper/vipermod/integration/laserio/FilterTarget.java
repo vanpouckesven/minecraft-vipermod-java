@@ -1,6 +1,7 @@
 package be.viper.vipermod.integration.laserio;
 
 import com.direwolf20.laserio.common.containers.customhandler.FilterCountHandler;
+import com.direwolf20.laserio.common.items.filters.FilterCount;
 import com.direwolf20.laserio.common.network.PacketHandler;
 import com.direwolf20.laserio.common.network.packets.PacketGhostSlot;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -15,16 +16,34 @@ import java.util.List;
  *
  * @param firstSlot    menu-index van de eerste filterslot
  * @param countHandler gezet bij een counting filter, null bij een basic filter
+ * @param fluids       filter zit in een fluid card: fluid-inputs i.p.v. item-inputs
  */
-record FilterTarget(AbstractContainerMenu menu, int firstSlot, @Nullable FilterCountHandler countHandler) {
+record FilterTarget(AbstractContainerMenu menu, int firstSlot, @Nullable FilterCountHandler countHandler,
+                    boolean fluids) {
     static final int SLOTS = 15;
+    /** Maximum mB per slot, zoals in CardFluidScreen */
+    static final int MAX_MB = 4_096_000;
+
+    /**
+     * Eén filterslot.
+     *
+     * @param mbAmount hoeveelheid fluid in mB, of -1 voor een gewoon item
+     */
+    record Entry(ItemStack stack, int mbAmount) {
+        static final Entry EMPTY = new Entry(ItemStack.EMPTY, -1);
+    }
 
     /** Overschrijft alle filterslots; slots voorbij de lijst worden leeggemaakt. */
-    void apply(List<ItemStack> stacks) {
+    void apply(List<Entry> entries) {
         for (int i = 0; i < SLOTS; i++) {
-            ItemStack stack = i < stacks.size() ? stacks.get(i).copy() : ItemStack.EMPTY;
-            if (countHandler == null && !stack.isEmpty()) {
-                stack.setCount(1);
+            Entry entry = i < entries.size() ? entries.get(i) : Entry.EMPTY;
+            ItemStack stack = entry.stack().copy();
+            int mbAmount = -1;
+            if (countHandler == null) {
+                if (!stack.isEmpty()) stack.setCount(1);
+            } else if (entry.mbAmount() > 0) {
+                mbAmount = Math.min(entry.mbAmount(), MAX_MB);
+                stack.setCount(Math.max(1, mbAmount / 1000));
             }
             int slotIndex = firstSlot + i;
 
@@ -32,8 +51,11 @@ record FilterTarget(AbstractContainerMenu menu, int firstSlot, @Nullable FilterC
             menu.slots.get(slotIndex).set(stack.copy());
             if (countHandler != null) {
                 countHandler.setStackInSlotSave(i, stack.copy());
+                if (mbAmount > 0) {
+                    FilterCount.setSlotAmount(countHandler.stack, i, mbAmount);
+                }
             }
-            PacketHandler.sendToServer(new PacketGhostSlot(slotIndex, stack, stack.getCount()));
+            PacketHandler.sendToServer(new PacketGhostSlot(slotIndex, stack, stack.getCount(), mbAmount));
         }
     }
 }

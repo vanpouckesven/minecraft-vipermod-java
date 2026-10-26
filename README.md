@@ -49,11 +49,12 @@ Build: `make build MOD=ViperMod` → `dist/ViperMod/vipermod-1.20.1-<versie>.jar
 
 ### JEI "+" voor LaserIO-filters
 Klik in JEI op `+` bij een recept terwijl een LaserIO **basic** of **counting filter** open staat
-(los, of in een item card). De item-inputs van het recept komen in de filter.
+(los, of in een item- of fluid card). De inputs van het recept komen in de filter.
 
 - Gelijke items worden samengeteld; bij de counting filter wordt dat de count.
 - Alle 15 slots worden overschreven (niet-gebruikte slots worden leeg).
-- Meer dan 15 verschillende items, of geen filter in de card: de `+` is rood met uitleg.
-- Fluids worden genegeerd.
+- Meer dan 15 verschillende inputs, of geen filter in de card: de `+` is rood met uitleg.
+- In een **fluid card** komen de fluid-inputs in de filter, als gevulde bucket of (zonder bucket) GT fluid cell. In een counting filter wordt de hoeveelheid in mB gezet.
+- In een item card of de losse filter-GUI komen enkel de item-inputs.
 - Werkt via LaserIO's eigen `PacketGhostSlot`, dus ViperMod hoeft enkel client-side geïnstalleerd te zijn voor deze feature.
 - Code: `integration/laserio/`.
