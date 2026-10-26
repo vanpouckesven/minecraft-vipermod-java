@@ -61,3 +61,15 @@ Klik in EMI (of JEI) op `+` bij een recept terwijl een LaserIO **basic** of **co
 - Werkt via LaserIO's eigen `PacketGhostSlot`, dus ViperMod hoeft enkel client-side geïnstalleerd te zijn voor deze feature.
 - Monifactory gebruikt **LaserIO UEL** (fork, modId `laserio`, versie 1.5.x) en **EMI** zonder JEI. ViperMod compileert daartegen; de JEI-variant werkt enkel in packs met JEI.
 - Code: `integration/laserio/` (`LaserIOEmi`, `LaserIOJei` delen `FilterTarget` en `RecipeInputs`).
+
+### EMI/JEI "+" naar ME-interfaces: hoeveelheid instelbaar
+esotericae2 laat `+` een recept in de config-slots van ME-interfaces zetten (AE2 Interface, ExtendedAE (Oversize) Interface,
+Precise/Threshold Export Bus, Precise Storage Bus), altijd met exact het receptaantal. ViperMod past die hoeveelheid aan via een client-mixin.
+
+- Instelling in `config/vipermod-client.toml`: `[ae2] transferAmount` = `RECIPE` | `HALF_STACK` | `FULL_STACK` (standaard `FULL_STACK`).
+- Stack = max stackgrootte van het item (64, 16, 1, …); voor fluids AE2's slotcapaciteit (standaard 4000 mB).
+- Nooit minder dan het receptaantal. De server klemt daarna nog af op wat het slot toelaat.
+- Werkt voor EMI en JEI tegelijk (beide gebruiken `FakeSlotTransferHelper`).
+- Compatibel met esotericae2 1.0.x (Monifactory 0.13.8) en 1.1.x (`extra_ae2_recipe_transfers`): `ViperMixinPlugin` kijkt in de bytecode
+  welke methodes `GenericStack.wrapInItemStack` aanroepen en past alleen de passende mixin toe. Zonder esotericae2 gebeurt er niets.
+- Code: `mixin/` en `integration/ae2/`.

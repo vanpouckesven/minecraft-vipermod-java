@@ -1,0 +1,14 @@
+{
+  "required": false,
+  "minVersion": "0.8",
+  "package": "be.viper.vipermod.mixin",
+  "plugin": "be.viper.vipermod.mixin.ViperMixinPlugin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "FakeSlotTransferHelperLegacyMixin",
+    "FakeSlotTransferHelperMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

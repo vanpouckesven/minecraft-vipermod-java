@@ -59,6 +59,10 @@ repositories {
         url = "https://maven.terraformersmc.com/releases/"
         content { includeGroup "dev.emi" }
     }
+    maven { // AE2
+        url = "https://modmaven.dev/"
+        content { includeGroup "appeng" }
+    }
     exclusiveContent { // CurseForge (LaserIO)
         forRepository { maven { url = "https://cursemaven.com" } }
         filter { includeGroup "curse.maven" }
@@ -70,6 +74,7 @@ dependencies {
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
     modCompileOnly "curse.maven:laserio-uel-1168178:${laserio_file_id}"
+    modCompileOnly "appeng:appliedenergistics2-forge:${ae2_version}"
 
     // Enkel voor runClient in dev (zoals Monifactory: EMI, geen JEI)
     modLocalRuntime "dev.emi:emi-forge:${emi_version}"
@@ -97,4 +102,9 @@ legacyForge.ideSyncTask generateModMetadata
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
+}
+
+// Forge 1.20.1 laadt mixin-configs via het manifest
+tasks.named("jar") {
+    manifest.attributes("MixinConfigs": "${mod_id}.mixins.json")
 }
