@@ -4,5 +4,12 @@
   "vipermod.laserio.no_fluids": "This recipe has no fluid inputs",
   "vipermod.laserio.no_container": "No bucket or fluid cell found for %s",
   "vipermod.laserio.too_many": "Recipe has %s different inputs, the filter only has %s slots",
-  "vipermod.laserio.multiplier": "Click: recipe amount x%s · Shift+click: exact"
+  "vipermod.laserio.multiplier": "Click: recipe amount x%s · Shift+click: exact",
+  "block.vipermod.resource_simulator": "Direct Resource Simulator",
+  "vipermod.hnn.selected_drop": "Selected output",
+  "vipermod.hnn.cycle": "Left-click: next · Right-click: previous",
+  "vipermod.hnn.no_model": "Insert a data model first",
+  "vipermod.hnn.no_drops": "This model has no fabricator drops",
+  "emi.category.vipermod.resource_simulator": "Direct Resource Simulator",
+  "vipermod.hnn.emi.cost": "%s ticks · %s FE/t"
 }

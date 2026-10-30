@@ -73,3 +73,19 @@ Precise/Threshold Export Bus, Precise Storage Bus), altijd met exact het recepta
 - Compatibel met esotericae2 1.0.x (Monifactory 0.13.8) en 1.1.x (`extra_ae2_recipe_transfers`): `ViperMixinPlugin` kijkt in de bytecode
   welke methodes `GenericStack.wrapInItemStack` aanroepen en past alleen de passende mixin toe. Zonder esotericae2 gebeurt er niets.
 - Code: `mixin/` en `integration/ae2/`.
+
+### Direct Resource Simulator (HNN)
+Nieuw blok `vipermod:resource_simulator`: Simulation Chamber + Loot Fabricator van Hostile Neural Networks in één.
+Een gelukte simulatie levert direct de gekozen fabricator-drop op, zonder mob predictions. Ontwerp: [ViperMod/idea.md](ViperMod/idea.md).
+
+- **ViperMod moet op client én server staan** (nieuw blok). Enkel actief als HNN geladen is (gebouwd tegen HNN 5.3.3 / Placebo 8.6.3).
+- Recept: shapeless, sim chamber + loot fabricator.
+- 300 ticks per cyclus, `sim_cost + Loot Fab Power Cost` FE/t (evenveel als beide machines parallel). Volgt de HNN-config.
+- GUI = de sim chamber-texture. Links: data model en daaronder het ghost slot met de gekozen drop
+  (**linksklik** = volgende, **rechtsklik** = vorige; per model onthouden). Rechtsboven: matrix-input, generalized predictions, loot.
+- Alleen de loot wordt naar de inventory **onder** het blok gepusht; generalized predictions blijven in hun slot.
+  Langs alle zijden: model/matrices erin, beide outputs eruit.
+- Blokmodel: bovenste helft sim chamber, onderste helft loot fabricator (HNN-textures, op halve grootte).
+- EMI: categorie "Direct Resource Simulator" (model + input → drop + generalized prediction), en data models /
+  mob predictions worden in EMI per model onderscheiden.
+- Code: `integration/hnn/`.

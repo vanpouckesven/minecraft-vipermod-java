@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "vipermod:block/resource_simulator" },
+    "facing=east": { "model": "vipermod:block/resource_simulator", "y": 90 },
+    "facing=south": { "model": "vipermod:block/resource_simulator", "y": 180 },
+    "facing=west": { "model": "vipermod:block/resource_simulator", "y": 270 }
+  }
+}

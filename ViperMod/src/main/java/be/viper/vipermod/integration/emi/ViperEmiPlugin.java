@@ -1,5 +1,6 @@
 package be.viper.vipermod.integration.emi;
 
+import be.viper.vipermod.integration.hnn.HnnEmi;
 import be.viper.vipermod.integration.laserio.LaserIOEmi;
 import dev.emi.emi.api.EmiEntrypoint;
 import dev.emi.emi.api.EmiPlugin;
@@ -13,6 +14,9 @@ public class ViperEmiPlugin implements EmiPlugin {
         // LaserIO-klassen pas laden als de mod er is
         if (ModList.get().isLoaded("laserio")) {
             LaserIOEmi.register(registry);
+        }
+        if (ModList.get().isLoaded("hostilenetworks")) {
+            HnnEmi.register(registry);
         }
     }
 }

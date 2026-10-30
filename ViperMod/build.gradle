@@ -63,6 +63,10 @@ repositories {
         url = "https://modmaven.dev/"
         content { includeGroup "appeng" }
     }
+    maven { // HNN + Placebo
+        url = "https://maven.shadowsoffire.dev/releases"
+        content { includeGroup "dev.shadowsoffire" }
+    }
     exclusiveContent { // CurseForge (LaserIO)
         forRepository { maven { url = "https://cursemaven.com" } }
         filter { includeGroup "curse.maven" }
@@ -75,10 +79,14 @@ dependencies {
     modCompileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
     modCompileOnly "curse.maven:laserio-uel-1168178:${laserio_file_id}"
     modCompileOnly "appeng:appliedenergistics2-forge:${ae2_version}"
+    modCompileOnly "dev.shadowsoffire:Placebo:${minecraft_version}-${placebo_version}"
+    modCompileOnly "dev.shadowsoffire:HostileNeuralNetworks:${minecraft_version}-${hnn_version}"
 
     // Enkel voor runClient in dev (zoals Monifactory: EMI, geen JEI)
     modLocalRuntime "dev.emi:emi-forge:${emi_version}"
     modLocalRuntime "curse.maven:laserio-uel-1168178:${laserio_file_id}"
+    modLocalRuntime "dev.shadowsoffire:Placebo:${minecraft_version}-${placebo_version}"
+    modLocalRuntime "dev.shadowsoffire:HostileNeuralNetworks:${minecraft_version}-${hnn_version}"
 }
 
 // mods.toml krijgt de waarden uit gradle.properties

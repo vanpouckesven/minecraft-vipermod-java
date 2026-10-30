@@ -1,0 +1,9 @@
+{
+  "conditions": [{ "type": "forge:mod_loaded", "modid": "hostilenetworks" }],
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "hostilenetworks:sim_chamber" },
+    { "item": "hostilenetworks:loot_fabricator" }
+  ],
+  "result": { "item": "vipermod:resource_simulator" }
+}
