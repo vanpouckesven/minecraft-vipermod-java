@@ -69,6 +69,7 @@ Precise/Threshold Export Bus, Precise Storage Bus), altijd met exact het recepta
 - Instelling in `config/vipermod-client.toml`: `[ae2] transferAmount` = `RECIPE` | `HALF_STACK` | `FULL_STACK` (standaard `FULL_STACK`).
 - Stack = max stackgrootte van het item (64, 16, 1, …); voor fluids AE2's slotcapaciteit (standaard 4000 mB).
 - Nooit minder dan het receptaantal. De server klemt daarna nog af op wat het slot toelaat.
+- Bestaande config-slots blijven staan (esotericae2 1.0.x wiste ze allemaal). Staat een input er al, dan krijgt dat slot de nieuwe hoeveelheid; anders komt hij in het eerste lege slot. Geen plaats meer: die input wordt overgeslagen. Code: `ConfigSlotFiller`.
 - Werkt voor EMI en JEI tegelijk (beide gebruiken `FakeSlotTransferHelper`).
 - Compatibel met esotericae2 1.0.x (Monifactory 0.13.8) en 1.1.x (`extra_ae2_recipe_transfers`): `ViperMixinPlugin` kijkt in de bytecode
   welke methodes `GenericStack.wrapInItemStack` aanroepen en past alleen de passende mixin toe. Zonder esotericae2 gebeurt er niets.
