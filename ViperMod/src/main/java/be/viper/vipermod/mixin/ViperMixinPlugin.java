@@ -34,10 +34,20 @@ public class ViperMixinPlugin implements IMixinConfigPlugin {
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         Set<String> required = REQUIRED_METHODS.get(mixinClassName);
-        if (required == null) return true;
+        if (required == null) return classExists(targetClassName);
         boolean apply = wrappingMethods(targetClassName).containsAll(required);
         if (apply) LOGGER.info("ViperMod: {} toegepast op {}", mixinClassName, targetClassName);
         return apply;
+    }
+
+    /** Doelklasse aanwezig? (GTCEu/LDLib zijn optioneel; zonder deze check logt Mixin een fout.) */
+    private static boolean classExists(String className) {
+        try {
+            MixinService.getService().getBytecodeProvider().getClassNode(className);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /** Methodes in de doelklasse die GenericStack.wrapInItemStack aanroepen (leeg als esotericae2 ontbreekt). */

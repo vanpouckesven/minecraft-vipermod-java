@@ -67,6 +67,14 @@ repositories {
         url = "https://maven.shadowsoffire.dev/releases"
         content { includeGroup "dev.shadowsoffire" }
     }
+    flatDir { // GTCEu-jar uit dist/ (eigen fork-build)
+        dirs "../dist/GregTech-Modern"
+        content { includeGroup "local" }
+    }
+    maven { // LDLib (GTCEu-GUI)
+        url = "https://maven.firstdark.dev/snapshots"
+        content { includeGroup "com.lowdragmc.ldlib" }
+    }
     exclusiveContent { // CurseForge (LaserIO)
         forRepository { maven { url = "https://cursemaven.com" } }
         filter { includeGroup "curse.maven" }
@@ -81,6 +89,9 @@ dependencies {
     modCompileOnly "appeng:appliedenergistics2-forge:${ae2_version}"
     modCompileOnly "dev.shadowsoffire:Placebo:${minecraft_version}-${placebo_version}"
     modCompileOnly "dev.shadowsoffire:HostileNeuralNetworks:${minecraft_version}-${hnn_version}"
+    // GTCEu: maven.gtceu.com is niet bereikbaar, dus de jar uit onze eigen fork-build (make build MOD=GregTech-Modern)
+    modCompileOnly "local:gtceu-${minecraft_version}:${gtceu_version}"
+    modCompileOnly("com.lowdragmc.ldlib:ldlib-forge-${minecraft_version}:${ldlib_version}") { transitive = false }
 
     // Enkel voor runClient in dev (zoals Monifactory: EMI, geen JEI)
     modLocalRuntime "dev.emi:emi-forge:${emi_version}"

@@ -11,5 +11,7 @@
   "vipermod.hnn.no_model": "Plaats eerst een data model",
   "vipermod.hnn.no_drops": "Dit model heeft geen fabricator drops",
   "emi.category.vipermod.resource_simulator": "Direct Resource Simulator",
-  "vipermod.hnn.emi.cost": "%s ticks · %s FE/t"
+  "vipermod.hnn.emi.cost": "%s ticks · %s FE/t",
+  "vipermod.gtceu.me_amount": "Zet minstens %s items / %s buckets per input",
+  "vipermod.gtceu.me_nothing": "Geen inputs van een type dat deze ME bus/hatch aanneemt"
 }

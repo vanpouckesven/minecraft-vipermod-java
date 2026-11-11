@@ -75,6 +75,21 @@ Precise/Threshold Export Bus, Precise Storage Bus), altijd met exact het recepta
   welke methodes `GenericStack.wrapInItemStack` aanroepen en past alleen de passende mixin toe. Zonder esotericae2 gebeurt er niets.
 - Code: `mixin/` en `integration/ae2/`.
 
+### EMI "+" naar GTCEu ME Input Bus / ME Input Hatch
+Klik in EMI op `+` bij een recept terwijl de GUI van een GTCEu **ME Input Bus** of **ME Input Hatch** open staat (ook de stocking-varianten).
+De inputs van het recept komen in de config-slots, zodat de bus/hatch ze uit het ME-netwerk haalt.
+
+- Hoeveelheid: items **minstens 1024**, fluids **minstens 1000 buckets (1 kB)**; vraagt het recept meer, dan het receptaantal.
+  Instelbaar in `config/vipermod-client.toml`: `[gtceu] meItemAmount` en `meFluidBuckets`.
+- Bus = enkel de item-inputs, hatch = enkel de fluid-inputs. Niet-verbruikte inputs (programmed circuit, molds, lenzen) worden overgeslagen;
+  de circuit zet je zelf in het circuit-slot van de bus.
+- Zelfde regels als bij de ME-interfaces: bestaande config blijft staan, een input die er al staat krijgt de nieuwe hoeveelheid,
+  anders het eerste lege slot; geen plaats meer = overgeslagen. Staat auto-pull aan, dan doet `+` niets.
+- Werkt via GTCEu's eigen GUI-packets, dus ViperMod hoeft enkel client-side geïnstalleerd te zijn.
+- GTCEu heeft zelf een EMI-handler voor al zijn GUI's; een mixin laat die wijken in ME bus/hatch-schermen.
+- Compileert tegen `dist/GregTech-Modern/gtceu-1.20.1-7.5.3.jar` (maven.gtceu.com is niet bereikbaar): eerst `make build MOD=GregTech-Modern`.
+- Code: `integration/gtceu/` en `mixin/GTEmiRecipeHandlerMixin`, `mixin/LdlibWidgetInvoker`.
+
 ### Direct Resource Simulator (HNN)
 Nieuw blok `vipermod:resource_simulator`: Simulation Chamber + Loot Fabricator van Hostile Neural Networks in één.
 Een gelukte simulatie levert direct de gekozen fabricator-drop op, zonder mob predictions. Ontwerp: [ViperMod/idea.md](ViperMod/idea.md).

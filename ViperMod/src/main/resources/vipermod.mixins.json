@@ -6,7 +6,9 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "FakeSlotTransferHelperLegacyMixin",
-    "FakeSlotTransferHelperMixin"
+    "FakeSlotTransferHelperMixin",
+    "GTEmiRecipeHandlerMixin",
+    "LdlibWidgetInvoker"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -11,5 +11,7 @@
   "vipermod.hnn.no_model": "Insert a data model first",
   "vipermod.hnn.no_drops": "This model has no fabricator drops",
   "emi.category.vipermod.resource_simulator": "Direct Resource Simulator",
-  "vipermod.hnn.emi.cost": "%s ticks · %s FE/t"
+  "vipermod.hnn.emi.cost": "%s ticks · %s FE/t",
+  "vipermod.gtceu.me_amount": "Sets at least %s items / %s buckets per input",
+  "vipermod.gtceu.me_nothing": "No inputs of a type this ME bus/hatch accepts"
 }

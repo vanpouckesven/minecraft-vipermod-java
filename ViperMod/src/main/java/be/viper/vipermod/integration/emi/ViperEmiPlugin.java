@@ -1,5 +1,6 @@
 package be.viper.vipermod.integration.emi;
 
+import be.viper.vipermod.integration.gtceu.GtceuMeEmi;
 import be.viper.vipermod.integration.hnn.HnnEmi;
 import be.viper.vipermod.integration.laserio.LaserIOEmi;
 import dev.emi.emi.api.EmiEntrypoint;
@@ -17,6 +18,9 @@ public class ViperEmiPlugin implements EmiPlugin {
         }
         if (ModList.get().isLoaded("hostilenetworks")) {
             HnnEmi.register(registry);
+        }
+        if (ModList.get().isLoaded("gtceu") && ModList.get().isLoaded("ae2")) {
+            GtceuMeEmi.register(registry);
         }
     }
 }
